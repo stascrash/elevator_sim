@@ -1,47 +1,49 @@
 import sys
 import pygame
-from elevator import ElevatorCabin
+from elevator import Elevator
 from world import Background
 pygame.init()
 
 # COLORS
-RED = (255, 0, 0)
+BLUE = (0, 0, 255)
 
 # Game display
 SIZE = (1024, 768)
 screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption('Elevator Simulator')
 clock = pygame.time.Clock()
-sprites = pygame.sprite.Group()
 
-background = Background(SIZE, 'data/images/bg_tile.jpg')
+background = Background(SIZE, 'data/images/tile_bg.png')
 
-# Sprite setup
-elevator = ElevatorCabin()
-elevator.rect.x = 200
-elevator.rect.y = 200
-
-sprites.add(elevator)
+elevator = Elevator(100, 550, screen)
+pygame.display.update()
 
 while True:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			sys.exit()
-	keys = pygame.key.get_pressed()
-	if keys[pygame.K_UP]:
-		elevator.move_up(10)
-	if keys[pygame.K_DOWN]:
-		elevator.move_down(10)
+		if event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_UP:
+				elevator.move_up(4)
+			elif event.key == pygame.K_DOWN:
+				elevator.move_down(3)
 
-	sprites.update()
+	# keys = pygame.key.get_pressed()
+	# if keys[pygame.K_UP]:
+	# 	elevator.move_up(4)
+	# if keys[pygame.K_DOWN]:
+	# 	elevator.move_down(3)
+	#
+	# if keys[pygame.K_LEFT]:
+	# 	elevator.open_doors()
+	# if keys[pygame.K_RIGHT]:
+	# 	elevator.close_doors()
 
-	screen.fill(RED)
-	pygame.surfarray.blit_array(screen, background.tiled_pixels)
+	screen.fill(BLUE)
 
-	# elevator draw
-	sprites.draw(screen)
-	pygame.display.flip()
+	elevator.draw()
+	# pygame.surfarray.blit_array(screen, background.tiled_pixels)
 
 	# Set FPS
 	clock.tick(30)

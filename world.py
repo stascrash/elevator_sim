@@ -9,3 +9,4 @@ class Background(object):
 		tile_x = size[0] / bg_pixels.shape[0]
 		tile_y = size[1] / bg_pixels.shape[1]
 		self.tiled_pixels = numpy.tile(bg_pixels, (tile_x, tile_y)).astype(int)
+

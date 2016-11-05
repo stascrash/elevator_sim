@@ -1,0 +1,2 @@
+class ElevatorMainControl(object):
+	pass
